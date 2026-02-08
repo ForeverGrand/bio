@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профиль • Professional</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            font-family: 'Pixelify Sans', cursive;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            position: relative;
+            overflow: hidden;
+            background: #000000;
+            cursor: none;
+        }
+
+        /* Background removed - using solid black */
+
+        /* Video Background */
+        .bg-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+
+        /* Click Screen */
+        .click-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000000;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: none;
+        }
+
+        .click-screen.hidden {
+            animation: fadeOut 0.4s ease-out forwards;
+            pointer-events: none;
+        }
+
+        .click-text {
+            font-family: 'Pixelify Sans', cursive;
+            font-size: 64px;
+            font-weight: 700;
+            color: #ffffff;
+            animation: pulse-click 1.2s ease-in-out infinite;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+            letter-spacing: 4px;
+        }
+
+        @keyframes pulse-click {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.7;
+                transform: scale(1.08);
+            }
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
+        }
+
+        /* Animated Background */
+        @keyframes bgMove {
+            0% {
+                background-position: 0 0;
+            }
+            100% {
+                background-position: 100px 100px;
+            }
+        }
+
+        body::before {
+            display: none !important;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 360px;
+            position: relative;
+            z-index: 2;
+            padding: 20px;
+        }
+
+        /* Profile Card - МАКСИМАЛЬНО ПРОЗРАЧНЫЙ */
+        .profile-card {
+            background: rgba(20, 20, 20, 0.15);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 28px 20px;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.2),
+                0 0 60px rgba(67, 181, 129, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            position: relative;
+            text-align: center;
+            animation: fadeIn 0.8s ease-out, pulse 4s ease-in-out 0.8s infinite;
+            perspective: 1000px;
+            transform-style: preserve-3d;
+        }
+
+        .profile-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            animation: slideInDown 0.6s ease-out;
+        }
+
+        .username {
+            font-size: 16px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 0;
+            letter-spacing: 0.3px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 1s ease-out 0.3s both;
+        }
+
+        .tag {
+            font-size: 11px;
+            color: #bbbbbb;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 1s ease-out 0.4s both;
+        }
+
+        /* Status Section */
+        .status-section {
+            margin-bottom: 12px;
+            animation: slideInUp 0.6s ease-out 0.2s both;
+        }
+
+        /* About Section */
+        .about-section {
+            margin-bottom: 12px;
+            animation: slideInUp 0.6s ease-out 0.3s both;
+        }
+
+        /* Roles Section */
+        .roles-section {
+            margin-bottom: 12px;
+            animation: slideInUp 0.6s ease-out 0.4s both;
+        }
+
+        /* Skills Section */
+        .skills-section {
+            margin-bottom: 12px;
+            animation: slideInUp 0.6s ease-out 0.5s both;
+        }
+
+        /* Action Buttons */
+        .actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 16px;
+            animation: slideInUp 0.6s ease-out 0.6s both;
+        }
+
+        .avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff1744, #d50000);
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            flex-shrink: 0;
+            position: relative;
+            box-shadow: 0 4px 12px rgba(255, 23, 68, 0.4);
+            animation: float 3.5s ease-in-out infinite, glow 3.5s ease-in-out infinite;
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .avatar::before {
+            content: '';
+        }
+
+        .avatar.online::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: #43b581;
+            border: 2px solid #000000;
+            border-radius: 50%;
+            bottom: 0;
+            right: 0;
+            box-shadow: 0 0 8px rgba(67, 181, 129, 0.6);
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 4px 0;
+            font-size: 12px;
+            color: #dddddd;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            background: #43b581;
+            box-shadow: 0 0 4px rgba(67, 181, 129, 0.6);
+        }
+
+        .about-text {
+            font-size: 12px;
+            line-height: 1.4;
+            color: #dddddd;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .role-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            justify-content: center;
+        }
+
+        .role-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            font-size: 10px;
+            color: #dddddd;
+            font-weight: 500;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .skill-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 4px 0;
+            font-size: 11px;
+        }
+
+        .skill-name {
+            color: #dddddd;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .skill-level {
+            font-size: 10px;
+            color: #999999;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Music Player */
+        .music-player {
+            margin-bottom: 16px;
+            padding: 12px;
+            background: linear-gradient(135deg, rgba(50, 50, 50, 0.3), rgba(20, 20, 20, 0.3));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            animation: slideInUp 0.6s ease-out 0.55s both;
+        }
+
+        .player-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .play-btn, .volume-btn {
+            background: linear-gradient(135deg, rgba(150, 150, 150, 0.3), rgba(80, 80, 80, 0.3));
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: none;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            color: #ffffff;
+        }
+
+        .play-btn:hover, .volume-btn:hover {
+            background: linear-gradient(135deg, rgba(180, 180, 180, 0.4), rgba(100, 100, 100, 0.4));
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .play-btn.playing {
+            color: #ffffff;
+            background: linear-gradient(135deg, rgba(200, 200, 200, 0.4), rgba(120, 120, 120, 0.4));
+        }
+
+        .player-info {
+            flex: 1;
+            text-align: center;
+        }
+
+        .song-title {
+            font-size: 11px;
+            color: #ffffff;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .song-time {
+            font-size: 9px;
+            color: #cccccc;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            overflow: hidden;
+            cursor: none;
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #cccccc, #ffffff);
+            width: 0%;
+            transition: width 0.1s linear;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+        }
+
+        /* Splash screen removed */
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
+        }
+
+        /* Custom Cursor */
+        .custom-cursor {
+            position: fixed;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            mix-blend-mode: screen;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.5), inset 0 0 8px rgba(255, 255, 255, 0.3);
+            animation: cursorGlow 2s ease-in-out infinite;
+        }
+
+        /* View Counter */
+        .view-counter {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            z-index: 10;
+        }
+
+        .eye-icon {
+            font-size: 9px;
+            opacity: 0.8;
+        }
+
+        .counter-text {
+            font-size: 9px;
+            color: #cccccc;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+
+        @keyframes cursorGlow {
+            0%, 100% {
+                background: #ffffff;
+                box-shadow: 0 0 8px rgba(255, 255, 255, 0.5), 
+                           inset 0 0 8px rgba(255, 255, 255, 0.3),
+                           0 0 20px rgba(255, 255, 255, 0.3);
+            }
+            25% {
+                background: #e0e0e0;
+                box-shadow: 0 0 12px rgba(224, 224, 224, 0.6), 
+                           inset 0 0 8px rgba(224, 224, 224, 0.4),
+                           0 0 25px rgba(224, 224, 224, 0.4);
+            }
+            50% {
+                background: #cccccc;
+                box-shadow: 0 0 16px rgba(204, 204, 204, 0.7), 
+                           inset 0 0 8px rgba(204, 204, 204, 0.5),
+                           0 0 30px rgba(204, 204, 204, 0.5);
+            }
+            75% {
+                background: #e0e0e0;
+                box-shadow: 0 0 12px rgba(224, 224, 224, 0.6), 
+                           inset 0 0 8px rgba(224, 224, 224, 0.4),
+                           0 0 25px rgba(224, 224, 224, 0.4);
+            }
+        }
+
+        .action-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 10px;
+            font-weight: 600;
+            cursor: none;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            backdrop-filter: blur(4px);
+        }
+
+        /* Action Buttons */
+        .actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .action-btn {
+            padding: 8px 14px;
+            border: none;
+            border-radius: 5px;
+            font-size: 10px;
+            font-weight: 600;
+            cursor: none;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            backdrop-filter: blur(4px);
+        }
+
+        .social-btn {
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+        }
+
+        .social-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        .work-btn {
+            display: block;
+            width: 100%;
+            padding: 10px 16px;
+            background: linear-gradient(135deg, rgba(200, 200, 200, 0.2), rgba(150, 150, 150, 0.2));
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            color: #ffffff;
+            text-decoration: none;
+            text-align: center;
+            font-family: 'Pixelify Sans', cursive;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: none;
+            transition: all 0.2s ease;
+            animation: slideInUp 0.6s ease-out 0.65s both;
+        }
+
+        .work-btn:hover {
+            background: linear-gradient(135deg, rgba(220, 220, 220, 0.3), rgba(170, 170, 170, 0.3));
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* Portfolio Modal */
+        .portfolio-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 5000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .portfolio-modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal-content {
+            background: rgba(20, 20, 20, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 24px;
+            max-width: 400px;
+            width: 90%;
+            position: relative;
+            animation: slideInUp 0.3s ease-out;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 24px;
+            cursor: none;
+            transition: all 0.2s ease;
+        }
+
+        .modal-close:hover {
+            color: #cccccc;
+            transform: scale(1.2);
+        }
+
+        .modal-title {
+            font-family: 'Pixelify Sans', cursive;
+            font-size: 18px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 16px;
+            text-align: center;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .portfolio-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .portfolio-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: linear-gradient(135deg, rgba(200, 200, 200, 0.1), rgba(150, 150, 150, 0.1));
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            color: #ffffff;
+            text-decoration: none;
+            font-family: 'Pixelify Sans', cursive;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: none;
+            transition: all 0.2s ease;
+        }
+
+        .portfolio-item:hover {
+            background: linear-gradient(135deg, rgba(220, 220, 220, 0.2), rgba(170, 170, 170, 0.2));
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateX(5px);
+        }
+
+        .portfolio-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, rgba(200, 200, 200, 0.3), rgba(150, 150, 150, 0.3));
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .portfolio-text {
+            flex: 1;
+        }
+
+        .portfolio-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            text-align: left;
+        }
+
+        .portfolio-url {
+            font-size: 10px;
+            color: #999999;
+            font-weight: 400;
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+            }
+            50% {
+                box-shadow: 0 8px 24px rgba(255, 255, 255, 0.4);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.8;
+            }
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .profile-card {
+            animation: fadeIn 0.8s ease-out, pulse 4s ease-in-out 0.8s infinite;
+            perspective: 1000px;
+            transform-style: preserve-3d;
+        }
+    </style>
+</head>
+<body>
+    <!-- Video Background -->
+    <video autoplay muted loop class="bg-video">
+        <source src="background.mp4" type="video/mp4">
+    </video>
+
+    <!-- Custom Cursor -->
+    <div class="custom-cursor" id="custom-cursor"></div>
+
+    <!-- Click Screen -->
+    <div class="click-screen" id="click-screen">
+        <div class="click-text">Click</div>
+    </div>
+
+        <div class="profile-card">
+            <!-- View Counter -->
+            <div class="view-counter">
+                <span class="eye-icon">👁</span>
+                <span class="counter-text">1572</span>
+            </div>
+
+            <!-- Profile Header -->
+            <div class="profile-header">
+                <div class="avatar online" style="background-image: url('avatar.gif'); background-size: cover; background-position: center;"></div>
+                <div class="username">Forever Grand</div>
+                <div class="tag">@forevergrands</div>
+            </div>
+
+            <!-- Status -->
+            <div class="status-section">
+                <div class="status-item">
+                    <span class="status-indicator"></span>
+                    <span>Online</span>
+                </div>
+            </div>
+
+            <!-- About -->
+            <div class="about-section">
+                <div class="about-text">
+                    Gamer • CS2 & Rust player
+                </div>
+            </div>
+
+            <!-- Skills -->
+            <div class="skills-section">
+                <div class="skill-item">
+                    <div class="skill-name">CS2</div>
+                    <div class="skill-level">Pro</div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">Rust</div>
+                    <div class="skill-level">Pro</div>
+                </div>
+            </div>
+
+            <!-- Roles -->
+            <div class="roles-section">
+                <div class="role-list">
+                    <div class="role-badge">Developer</div>
+                    <div class="role-badge">Designer</div>
+                </div>
+            </div>
+
+            <!-- Music Player -->
+            <div class="music-player">
+                <audio id="audio-player" preload="auto">
+                    <source src="music.mp3" type="audio/mpeg">
+                </audio>
+                <div class="player-controls">
+                    <button class="play-btn" id="play-btn">▶</button>
+                    <div class="player-info">
+                        <div class="song-title">Now Playing</div>
+                        <div class="song-time">
+                            <span id="current-time">0:00</span> / <span id="duration">0:00</span>
+                        </div>
+                    </div>
+                    <button class="volume-btn" id="volume-btn">🔊</button>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress" id="progress"></div>
+                </div>
+            </div>
+
+            <!-- Social Links -->
+            <div class="actions">
+                <button class="action-btn social-btn youtube" id="youtube-btn">
+                    YouTube
+                </button>
+                <button class="action-btn social-btn telegram" id="telegram-btn">
+                    Telegram
+                </button>
+            </div>
+
+            <!-- Tab Navigation -->
+            <!-- Tab Navigation -->
+            <button class="work-btn" id="kwork-btn" style="margin-top: 14px; animation: slideInUp 0.6s ease-out 0.65s both;">
+                WORK
+            </button>
+        </div>
+
+        <!-- Portfolio Modal -->
+        <div class="portfolio-modal" id="portfolio-modal">
+            <div class="modal-content">
+                <button class="modal-close" id="modal-close">✕</button>
+                <div class="modal-title">My Work</div>
+                <div class="portfolio-list">
+                    <a href="https://kwork.ru/user/andreyduhesh1222" target="_blank" class="portfolio-item">
+                        <span class="portfolio-icon">K</span>
+                        <div class="portfolio-info">
+                            <span class="portfolio-text">Kwork</span>
+                            <span class="portfolio-url">kwork.ru/user/andreyduhesh1222</span>
+                        </div>
+                    </a>
+                    <a href="https://playerok.com/profile/zxc-werage/products" target="_blank" class="portfolio-item">
+                        <span class="portfolio-icon">P</span>
+                        <div class="portfolio-info">
+                            <span class="portfolio-text">Playerok</span>
+                            <span class="portfolio-url">playerok.com/profile/zxc-werage</span>
+                        </div>
+                    </a>
+                    <a href="https://github.com/ForeverGrand" target="_blank" class="portfolio-item">
+                        <span class="portfolio-icon">G</span>
+                        <div class="portfolio-info">
+                            <span class="portfolio-text">Github</span>
+                            <span class="portfolio-url">github.com/ForeverGrand</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    <script>
+        // Custom Cursor
+        const customCursor = document.getElementById('custom-cursor');
+        
+        document.addEventListener('mousemove', (e) => {
+            customCursor.style.left = e.clientX - 8 + 'px';
+            customCursor.style.top = e.clientY - 8 + 'px';
+        });
+
+        // Скрываем курсор когда он уходит с экрана
+        document.addEventListener('mouseleave', () => {
+            customCursor.style.opacity = '0';
+        });
+
+        document.addEventListener('mouseenter', () => {
+            customCursor.style.opacity = '1';
+        });
+
+        // Tab Navigation - удалено
+
+        // YouTube Button
+        const youtubeBtn = document.getElementById('youtube-btn');
+        if (youtubeBtn) {
+            youtubeBtn.addEventListener('click', () => {
+                const confirmed = confirm('Go to YouTube?\n\nhttps://youtube.com');
+                if (confirmed) {
+                    window.open('https://youtube.com', '_blank');
+                }
+            });
+        }
+
+        // Telegram Button
+        const telegramBtn = document.getElementById('telegram-btn');
+        if (telegramBtn) {
+            telegramBtn.addEventListener('click', () => {
+                const confirmed = confirm('Go to Telegram?\n\nhttps://t.me');
+                if (confirmed) {
+                    window.open('https://t.me', '_blank');
+                }
+            });
+        }
+
+        // Kwork Button Confirmation
+        const kworkBtn = document.getElementById('kwork-btn');
+        const portfolioModal = document.getElementById('portfolio-modal');
+        const modalClose = document.getElementById('modal-close');
+
+        if (kworkBtn && portfolioModal && modalClose) {
+            kworkBtn.addEventListener('click', () => {
+                portfolioModal.classList.add('active');
+            });
+
+            modalClose.addEventListener('click', () => {
+                portfolioModal.classList.remove('active');
+            });
+
+            portfolioModal.addEventListener('click', (e) => {
+                if (e.target === portfolioModal) {
+                    portfolioModal.classList.remove('active');
+                }
+            });
+
+            // Portfolio Items Confirmation
+            const portfolioItems = document.querySelectorAll('.portfolio-item');
+            portfolioItems.forEach(item => {
+                item.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const url = item.getAttribute('href');
+                    const title = item.querySelector('.portfolio-text').textContent;
+                    const confirmed = confirm(`Go to ${title}?\n\n${url}`);
+                    if (confirmed) {
+                        window.open(url, '_blank');
+                    }
+                });
+            });
+        }
+
+        // Click Screen
+        const clickScreen = document.getElementById('click-screen');
+        
+        if (clickScreen) {
+            clickScreen.addEventListener('click', () => {
+                clickScreen.classList.add('hidden');
+                
+                // Автозапуск музыки
+                const audio = document.getElementById('audio-player');
+                const playBtn = document.getElementById('play-btn');
+                
+                if (audio && playBtn) {
+                    audio.play().then(() => {
+                        playBtn.textContent = '⏸';
+                        playBtn.classList.add('playing');
+                    }).catch(err => {
+                        console.log('Ошибка воспроизведения:', err);
+                    });
+                }
+            });
+        }
+
+        // Splash Screen removed - profile loads immediately
+
+        // Музыкальный плеер
+        const audio = document.getElementById('audio-player');
+        const playBtn = document.getElementById('play-btn');
+        const volumeBtn = document.getElementById('volume-btn');
+        const progressBar = document.querySelector('.progress-bar');
+        const progress = document.getElementById('progress');
+        const currentTimeEl = document.getElementById('current-time');
+        const durationEl = document.getElementById('duration');
+
+        if (!audio || !playBtn || !volumeBtn || !progressBar) {
+            console.log('Audio player elements not found');
+        } else {
+            let isPlaying = false;
+
+        // Функция форматирования времени
+        function formatTime(seconds) {
+            if (isNaN(seconds)) return '0:00';
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        // Play/Pause
+        if (playBtn) {
+            playBtn.addEventListener('click', () => {
+                if (isPlaying) {
+                    audio.pause();
+                    playBtn.textContent = '▶';
+                    playBtn.classList.remove('playing');
+                    isPlaying = false;
+                } else {
+                    audio.play();
+                    playBtn.textContent = '⏸';
+                    playBtn.classList.add('playing');
+                    isPlaying = true;
+                }
+            });
+        }
+
+        // Volume
+        if (volumeBtn) {
+            volumeBtn.addEventListener('click', () => {
+                if (audio.volume > 0) {
+                    audio.volume = 0;
+                    volumeBtn.textContent = '🔇';
+                } else {
+                    audio.volume = 1;
+                    volumeBtn.textContent = '🔊';
+                }
+            });
+        }
+
+        // Update duration
+        if (audio) {
+            audio.addEventListener('loadedmetadata', () => {
+                if (durationEl) durationEl.textContent = formatTime(audio.duration);
+            });
+        }
+
+        // Update progress
+        if (audio) {
+            audio.addEventListener('timeupdate', () => {
+                if (progress && audio.duration) {
+                    const percent = (audio.currentTime / audio.duration) * 100;
+                    if (progress) progress.style.width = percent + '%';
+                    if (currentTimeEl) currentTimeEl.textContent = formatTime(audio.currentTime);
+                }
+            });
+        }
+
+        // Click on progress bar
+        if (progressBar && audio) {
+            progressBar.addEventListener('click', (e) => {
+                const rect = progressBar.getBoundingClientRect();
+                const percent = (e.clientX - rect.left) / rect.width;
+                audio.currentTime = percent * audio.duration;
+            });
+        }
+
+        // Loop
+        if (audio) {
+            audio.addEventListener('ended', () => {
+                audio.currentTime = 0;
+                audio.play();
+            });
+        }
+        } // Закрытие основной проверки
+
+        // Отслеживание курсора для 3D эффекта
+        const container = document.querySelector('.container');
+        const profileCard = document.querySelector('.profile-card');
+
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+
+            // Ротация на основе позиции курсора
+            const rotateX = (y - 0.5) * 10;
+            const rotateY = (x - 0.5) * 10;
+
+            profileCard.style.transform = `
+                perspective(1000px)
+                rotateX(${rotateX}deg)
+                rotateY(${rotateY}deg)
+            `;
+
+            // Смещение тени в сторону курсора
+            const shadowX = (x - 0.5) * 30;
+            const shadowY = (y - 0.5) * 30;
+            profileCard.style.boxShadow = `
+                ${shadowX}px ${shadowY}px 40px rgba(0, 0, 0, 0.3),
+                0 0 60px rgba(67, 181, 129, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15)
+            `;
+        });
+
+        // Возврат в исходное состояние при уходе курсора
+        document.addEventListener('mouseleave', () => {
+            profileCard.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+            profileCard.style.boxShadow = `
+                0 8px 32px rgba(0, 0, 0, 0.2),
+                0 0 60px rgba(67, 181, 129, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15)
+            `;
+        });
+    </script>
